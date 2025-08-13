@@ -1,0 +1,32 @@
+/*
+  Small SCSS theme that provides University of Edinburgh branding
+  to Quarto presentations. Released by Josh Fogg under a Creative
+  Commons Zero (CC0) license.
+*/
+
+/*-- scss:defaults --*/
+
+/* UoE's sans-serif brand font */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+/* UoE does not have a monospace brand font so using Inconsolata. */
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:400,700');
+
+// $font-family-sans-serif: "Source Sans 3";  // BUG setting not working
+$font-family-monospace: 'Inconsolata', monospace;
+
+// colors
+// $body-bg: #FFFBEB !default;
+$body-color: #041E42 !default;
+$selection-bg: #D50032 !default;
+
+/* UoE link color for use with 'university-blue' */
+$link-color: #19b5fe !default;
+
+
+/*-- scss:rules --*/
+
+// stop the menu being that distracting blue colour
+.reveal .slide-menu-button .fa-bars::before {
+  filter: grayscale(100%);
+}
