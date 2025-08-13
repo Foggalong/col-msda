@@ -1,0 +1,146 @@
+---
+title: "Algebra & Functions"
+subtitle: "Lecture 1 - FNDN07012"
+format:
+  revealjs:
+    smaller: true
+    theme: [default, edtheme.scss]
+slide-number: true
+progress: false
+title-slide-attributes:
+  data-background-color: "#041E42"
+  data-color: "#d6d6d6"
+logo: white_logo.png
+---
+
+## Introduction
+
+Should have a first slide which introduces the course: its teachers, the format of lectures vs workshops, and where to find key information
+
+1.  List item A,
+2.  List item B,
+3.  List item C,
+4.  Final list item.
+
+```{r}
+#| label: r-setup
+#| echo: false
+#| warning: false
+#| message: false
+#| cache: true
+options(htmltools.dir.version = FALSE)
+library(ggplot2)
+
+base_axes <- ggplot(data.frame(x=c(-5, 5)), aes(x=x)) +
+  geom_vline(xintercept=0, colour = "grey") +
+  geom_hline(yintercept=0, colour = "grey")
+```
+
+# Algebra Recap {.center background-color="#041E42" style="color: #d6d6d6; text-align: center;"}
+
+## Linear Equations
+
+An equation in a variable $x$ is **linear** it has the algebraic form $y = mx + c$, where $m$ is the gradient of the line and $c$ is the $y$-intercept.
+
+```{r}
+#| label: linear-plot
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of a straight line that has gradient 2 and intercepts the y-axis at y = 3."
+#| fig-cap: "Plot of the line $y = 2x + 3$."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+equation = function(x){2*x+3}
+base_axes + stat_function(fun=equation)
+```
+
+A linear equation $mx + c = 0$ only has one **solution**: $x = -\frac{c}{m}$.
+
+::: {.callout-note}
+### Example
+The equation $2x + 3 = 0$ has the solution $x = -\frac{3}{2} = -1.5$.
+:::
+
+## Quadratic Equations
+
+An equation in a variable $x$ is **quadratic** it has the algebraic form $y = ax^2 + bx + c$, where $a$, $b$, and $c$ are some numbers and $a\neq0$.
+
+```{r}
+#| label: quadratic-plot
+#| echo: false
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of a quadratic curve with roots at 2 and -2.5 and intercepts the y-axis at y = -10."
+#| fig-cap: "Plot of the line $y = 2x^2 + x - 10$."
+#| fig-width: 5
+#| fig-height: 2.5
+#| cache: true
+
+equation = function(x){(x-2)*(2*x+5)}
+base_axes + stat_function(fun=equation)
+```
+
+A quadratic $ax^2 + bx = 0$ has no, one, or two solutions, given by $x = -\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
+
+::: {.callout-note}
+### Example
+The quadratic $y = 2x^2 + x - 10$ has solutions $x = \frac{-1 \pm 9}{4}$. That is, the solution is $x = \frac{8}{4} = 2$ or $x = -\frac{10}{4} = -2.5$.
+:::
+
+## Negative Exponents
+
+Raising a variable to a negative power is the same as taking the **reciprocal** of the positive power (_e.g._ $x^{-3} = \frac{1}{x^3}$).
+
+```{r}
+#| label: singularity-plot
+#| echo: false
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of a curve with no roots and a singularity as x = 0."
+#| fig-cap: "Plot of the line $y = 3x^{-2}$."
+#| fig-width: 5
+#| fig-height: 2.5
+#| cache: true
+
+equation = function(x){3/(x**2)}
+base_axes + stat_function(fun=equation) + ylim(0,12)
+```
+
+Care is needed with negative exponents because we want to avoid **dividing by zero**.
+
+::: {.callout-note}
+### Example
+The curve $y = 3x^{-2} = \frac{3}{x^2}$ has a **singularity** at $x = 0$, since it is undefined for that value.
+:::
+
+## oh no
+
+Real graphs are often messier though, with multiple solutions and singularities.
+
+```{r}
+#| label: messy-plot
+#| echo: false
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of a curve with multiple roots and singularities."
+#| fig-cap: "Plot of the line $y = \\frac{3(2x+3)(2x^2 + x - 10)}{x^2(5x+1)}$."
+#| fig-width: 10
+#| fig-height: 4
+#| cache: true
+
+equation = function(x){(3*(2*x + 3)*(2*x*x + x -10))/((x**2)*(5*x+10))}
+base_axes + stat_function(fun=equation, n=10000) + ylim(-20,20)
+```
+
+To make it easier to work with these, we turn to a concept called **functions**.
+
+# Functions {.center background-color="#041E42" style="color: #d6d6d6; text-align: center;"}
+
+## Definition
+
+Some may have seen previously as “function machines.” The core idea is a mathematical object that takes one or more numbers as input, performs some set of operations, and then produces another number as the output. This will also include defining a functions’ domain, codomain, range, and inverses. 
+
