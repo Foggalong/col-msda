@@ -30,3 +30,9 @@ $link-color: #19b5fe !default;
 .reveal .slide-menu-button .fa-bars::before {
   filter: grayscale(100%);
 }
+
+// make sure figure captions are always centred
+p.caption {
+  margin: auto;
+  text-align: center;
+}
