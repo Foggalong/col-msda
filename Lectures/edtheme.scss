@@ -32,7 +32,7 @@ $link-color: #19b5fe !default;
 }
 
 // make sure figure captions are always centred
-p.caption {
+p.caption, figcaption {
   margin: auto;
   text-align: center;
 }
