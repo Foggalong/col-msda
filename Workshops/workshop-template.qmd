@@ -1,7 +1,16 @@
 ---
 title: "Workshop Template"
-format: html
+format:
+  html:
+    number-sections: true
+params:
+  show_solutions: true
 ---
+
+```{r}
+#| echo: false
+source("solution.R")
+```
 
 ## Quarto
 
@@ -24,6 +33,19 @@ You can add options to executable code like this
 
 The `echo: false` option disables the printing of code (only output is displayed).
 
+### {}
+
+What is 2+2?
+
+::: `r solution()`
+So the solution to this problem is obviously
+
+\begin{equation}
+  1+1 = 2,
+\end{equation}
+
+rather than $1+1 = 4$.
+:::
 
 ## Formatting Maths
 
