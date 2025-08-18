@@ -1,0 +1,373 @@
+---
+title: "Algebra & Functions"
+answers: false  # toggle true/false to show solutions
+---
+
+```{r}
+#| label: r-setup
+#| echo: false
+#| warning: false
+#| message: false
+#| cache: true
+options(htmltools.dir.version = FALSE)
+library(tidyverse)
+
+base_axes <- function(a, b) {
+  # shorthand to set up Cartesian axes over a < x < b 
+  ggplot(data.frame(x=c(a, b)), aes(x=x)) +
+  # add axis lines to help guide plots
+    geom_vline(xintercept=0, colour="grey") +
+    geom_hline(yintercept=0, colour="grey")
+}
+```
+
+This problem sheet is split into four sections, split across algebra recap and new content. However, there are only four questions per topic. If there's any particular question you find difficult, try using [ELM](https://elm.edina.ac.uk/elm/elm) to create more questions as a study aid.
+
+![](elm-logo.png){fig-alt="Logo of ELM: Edinburgh (access to) Language Models" fig-align="center" width=60%}
+
+An example prompt might look like
+
+> Can you create 5 examples of questions similar to "What does 5a + 3b + 2a + b + 5c simplify to?" using a variety of phrasing and presentation technique.
+
+As we've seen, generative AI isn't always great at solving the problems it creates! Instead check your solutions to these problems using a tool like [Wolfram Alpha](https://www.wolframalpha.com/input?i=What+does+5a+%2B+3b+%2B+2a+%2B+b+%2B+5c+simplify+to%3F) or [Desmos](https://www.desmos.com/calculator/clqqw0vgvu).
+
+## Simplifying Expressions
+
+These questions practice simplifying algebraic expressions.
+
+1. What does $5a + 3b + 2a + b + 5c$ simplify to?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+When simplifying, only terms given in the same variables may be added. Here there are three variables: $a$, $b$, and $c$. Therefore
+\begin{align}
+  5a + 3b + 2a + b + 5c &= (5a + 2a) + (3b + b) + 5c \\
+                        &= 7a + 4b + 5c.
+\end{align}
+:::
+::::
+
+2. What does $x^2 - 2x + 3x^2 + 5x$ simplify to?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+The previous rule also applies to powers of different terms: terms given in $x$ and terms given in $x^2$ cannot added. Therefore
+\begin{align}
+  x^2 - 2x + 3x^2 + 5x + 1 &= (x^2 + 3x^2) + (-2x + 5x) + 1 \\
+                           &= 4x^2 + 3x + 1.
+\end{align}
+:::
+::::
+
+3. What does $n^2 \times n^3$ simplify to?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Writing this out in full,
+\begin{equation}
+  n^2 \times n^3 = (n \times n) \times (n \times n \times n) = n^5.
+\end{equation}
+:::
+
+:::{.callout-note}
+This can be seen as a general rule; expressions of the form $x^a \times x^b$ simplify to $x^{a+b}$.
+:::
+::::
+
+4. What does $\frac{p^8}{p^4}$ simplify to?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Writing this out in full,
+\begin{equation}
+  \frac{p^8}{p^4} = \frac{p\times p\times p\times p\times p\times p\times p\times p}{p\times p\times p\times p}
+\end{equation}
+and then cancelling $p$s one by one:
+\begin{equation}
+  \frac{p^8}{p^4} = \frac{p\times p\times p\times p\times \cancel{p}\times \cancel{p}\times \cancel{p}\times \cancel{p}}{\cancel{p}\times \cancel{p}\times \cancel{p}\times \cancel{p}} = p^4.
+\end{equation}
+:::
+
+:::{.callout-note}
+Alternatively, this can be solved using the rules $x^a \times x^b = x^{a+b}$ and $\frac{1}{x^n} = x^{-n}$ as follows:
+\begin{equation}
+  \frac{p^8}{p^4} = p^8 \times p^{-4} = p^{8-4} = p^4.
+\end{equation}
+:::
+::::
+
+## Linear Equations
+
+1. What is the solution to $5x + 3 = 0$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+While this can be solved by the formula $x = -\frac{c}{m}$, it is straightforward to do explicitly by subtracting $3$ from both sides and then dividing through by $5$:
+\begin{align}
+  5x + 3 = 0 \quad\Rightarrow\quad 5x = -3 \quad\Rightarrow\quad x = -\frac{3}{5}.
+\end{align}
+:::
+::::
+
+2. At what point does $y = 0.2x - 0.5$ cross the $y$-axis? How about the $x$-axis?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+A line $y = mx + c$ intercepts the $y$-axis when $x = 0$, _i.e._ when $y = c$. Therefore this line intercepts the $y$-axis when $y = -\frac{1}{2}$ (the point $(0,-0.5)$ on a plot).
+
+A line intercepts the $x$-axis when $y = 0$, _i.e._ when $mx + c = 0$. By previous, this is when $x = -\frac{c}{m}$. Therefore this line intercepts the $x$-axis at $x = -\frac{0.5}{0.2} = -2.5$ (the point $(-2.5, 0)$ on a plot).
+:::
+
+:::{.callout-note}
+These answers can be checked visually by looking at the plot of $y = 0.2x - 0.5$.
+```{r}
+#| label: linear-plot
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of the line y = 0.2x - 0.5 on Cartesian axes."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+equation = function(x){0.2*x-0.5}
+base_axes(-2.5, 5) + stat_function(fun=equation)
+```
+:::
+::::
+
+3. When does the lines $y = 2x - 1$ and $y = -2x + 3$ intersect?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Two curves intersect when both their $x$ values and $y$ values are equal. If the $y$ values of these lines are equal, that means
+\begin{equation}
+  2x - 1 = -2x + 3 \quad\Rightarrow\quad 4x = 4 \quad\Rightarrow\quad x = 1
+\end{equation}
+When $x = 1$, $y = 2\times1 - 1 = 1$. Hence the lines intersect at the point $(1,1)$.
+:::
+
+:::{.callout-note}
+This can also be shown graphically.
+```{r}
+#| label: linear-intersection
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of y = 2x - 1 and y = -2x + 3 on Cartesian axes."
+#| fig-cap: "Plot of $y = 2x - 1$ (blue) and $y = -2x + 3$ (orange)."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+
+base_axes(0, 3) +
+  stat_function(fun=function(x){2*x - 1}, colour="lightskyblue") +
+  stat_function(fun=function(x){-2*x + 3}, colour="darkorange")
+```
+:::
+::::
+
+4. Explain in words the gradient $m$ of a straight line $y = mx + c$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+The gradient of a line is a measure of how steep it is. For every increase in $x$ by $1$, the value of $y$ will go up or down by $m$ (depending whether $m$ is positive or negative).
+:::
+
+:::{.callout-note}
+Related to this explanation, there is a formula for computing the gradient; give two points on a line, $(x_1, y_1)$ and $(x_2, y_2)$, the gradient is the ratio of the differences in coordinates:
+\begin{equation}
+  m = \frac{y_2 - y_1}{x_2 - x_1}.
+\end{equation}
+:::
+
+
+::::
+
+## Quadratic Equations
+
+1. What is $n$ if $n^2 = 9$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Rearranging this gives $n^2 - 9 = 0$. Using the formula for the difference of two squares[^D2S], this is the same as $(n+3)(n-3) = 0$. This can only be true when $n = 3$ or $n = -3$, so these are the solutions.
+:::
+
+[^D2S]: Recall that by multiplying out, $(a-b)(a+b) = a^2 - b^2$ for any values $a$ and $b$.
+
+::::
+
+2. What are the roots of $3y^2 + 5y - 1$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+This is asking for the $y$ that solve $3y^2 + 5y - 1 = 0$. Using the quadratic formula,
+\begin{align}
+  y = \frac{-b\pm\sqrt{b^2 - 4ac}}{2a} &= \frac{-5\pm\sqrt{5^2 - 4\times3\times-1}}{2\times3} \\
+  &= \frac{-5 \pm \sqrt{25 + 12}}{6} \\
+  &= -\frac{5}{6} \pm \frac{\sqrt{37}}{6}
+\end{align}
+So the roots are $y = -\frac{5}{6} + \frac{\sqrt{37}}{6} \approx 0.18$ and $y = -\frac{5}{6} - \frac{\sqrt{37}}{6} \approx -1.85$ to 2 decimal places.
+:::
+::::
+
+3. At what points do the curves $y = x^2 + 2x$ and $7y + x^2 = 4$ intersect?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+This could be solved by rearranging the second equation to make $y$ the subject, then setting the two equal to one another. However that will mean subsequent calculations involve lots of fractions.
+
+An alternative, in this case simpler, approach is to substitute the first equation into the second.
+\begin{align}
+  7y + x^2 = 4 &\quad\Rightarrow\quad 7(x^2 + 2x) + x^2 = 4 \\
+               &\quad\Rightarrow\quad 7x^2 + 14x + x^2 = 4 \\
+               &\quad\Rightarrow\quad 8x^2 + 14x - 4 = 0 \\
+               &\quad\Rightarrow\quad 8x^2 + 14x - 4 = 0 \\
+               &\quad\Rightarrow\quad x = -\frac{7}{8} \pm \frac{9}{8},
+\end{align}
+where the final line comes from the quadratic formula. This leaves two cases:
+
+1. If $x = -\frac{7}{8} - \frac{9}{8} = -2$, then $y = (-2)^2 + 2(-2) = 0$.
+2. If $x = -\frac{7}{8} + \frac{9}{8} = \frac{1}{4}$, then $y = (\frac{1}{4})^2 + 2(\frac{1}{4}) = \frac{9}{16}$.
+
+So the final answer is that the curves intersect at $(-2, 0)$ and $(\frac{1}{4}, \frac{9}{16})$.
+:::
+
+:::{.callout-note}
+This can also be shown graphically.
+```{r}
+#| label: quadratic-intersection
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of y = x^2 + 2x and 7y + x^2 = 4 on Cartesian axes."
+#| fig-cap: "Plot of $y = x^2 + 2x$ (blue) and $7y + x^2 = 4$ (orange)."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+
+base_axes(-2.5, 0.5) +
+  stat_function(fun=function(x){x**2 + 2*x}, colour="lightskyblue") +
+  stat_function(fun=function(x){4/7 - (1/7)*x**2}, colour="darkorange")
+```
+:::
+::::
+
+4. What are the solutions to $3x^2 - 48 = 0$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+While the quadratic formula could work here, it would be using a sledgehammer to crack a nut. Dividing through by $3$ gives $x^2 - 16 = 0$ which is a difference of two squares, hence the roots are $x = \pm4$.
+:::
+::::
+
+## Functions
+
+1. What are the domain and range of $f(x) = \sqrt{x}$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+It's not possible to get a real square root from a negative number, so $x$ must be positive. The notation $\sqrt{}$ is defined as the positive square root (as oppose to $\pm\sqrt{}$), so only positive values will be given as outputs too. Formally then, the domain is $\mathbb{R}^{\geq0}$ and the range is $\mathbb{R}^{\geq0}$.
+:::
+
+:::{.callout-note}
+This can be confirmed by looking at the plot of $y = f(x)$.
+```{r}
+#| label: sqrt-plot
+#| echo: false
+#| warning: false  # hide the warnings that come from taking negative roots
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of the square root of x on Cartesian axes."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+equation = function(x){x**0.5}
+base_axes(-1, 6) + stat_function(fun=equation, n=1e4)
+```
+:::
+::::
+
+2. If $f(x) = x(x+1)$, what is the inverse function?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+First we write the function as $y = x(x+1)$ and then swap each instance of $x$ and $y$. From there,
+\begin{equation}
+  x = y(y+1) = y^2 + y = \left({y+\frac{1}{2}}\right)^2 - \frac{1}{4}
+\end{equation}
+by [completing the square](https://en.wikipedia.org/wiki/Completing_the_square). This can now be rearranged to make $y$ the subject again:
+\begin{align}
+  x = \left({y+\frac{1}{2}}\right)^2 - \frac{1}{4}
+    &\quad\Rightarrow\quad x + \frac{1}{4} = \left({y+\frac{1}{2}}\right)^2 \\
+    &\quad\Rightarrow\quad \pm\sqrt{x + \frac{1}{4}} = y + \frac{1}{2} \\
+    &\quad\Rightarrow\quad -\frac{1}{2} \pm\sqrt{x + \frac{1}{4}} = y.
+\end{align}
+From this, the final answer if $f^{-1}(x) = -\frac{1}{2} \pm \sqrt{x + \frac{1}{4}}$.
+:::
+
+:::{.callout-note}
+This can be confirmed as correct by looking at the plot of $y = f(x)$.
+```{r}
+#| label: function-inverse
+#| echo: false
+#| warning: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of y = f(x) and its inverse, demonstrating the reflection in y = x."
+#| fig-cap: "Plot of $y = f(x)$ (blue), $y = f^{-1}(x)$ (orange), and $y = x$ (grey)."
+#| fig-width: 4
+#| fig-height: 4
+#| cache: true
+
+
+base_axes(-2, 2) +
+  stat_function(fun=function(x){x}, n=2, colour="grey") +
+  stat_function(fun=function(x){x*(x+1)}, colour="lightskyblue") +
+  stat_function(fun=function(x){-0.5 + (x+0.25)**0.5}, n=1e4, colour="darkorange") +
+  stat_function(fun=function(x){-0.5 - (x+0.25)**0.5}, n=1e4, colour="darkorange") +
+  ylim(-2,2)
+```
+:::
+::::
+
+3. Find functions $f(x)$ and $g(x)$ that prove $f\circ g\neq g\circ f$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+In sharp contrast to maths from school, this type of open ended question, where there isn't just one right answer, is fairly typical at university. While there there are infinitely many $f$ and $g$ that could be used, it pays to pick as simple examples as possible.
+
+If $f(x) = x+1$ and $g(x) = x^2$, then
+\begin{equation}
+  f\circ g = f(x^2) = x^2 + 1
+\end{equation} while \begin{equation}
+  g\circ f = f(x+1) = (x+1)^2 = x^2 + 2x + 1.
+\end{equation}
+
+Therefore $f\circ g\neq g\circ f$.
+:::
+::::
+
+4. If $h(x) = \sqrt{x^2 + 2}$, what is a possible decomposition of $h$? Are there others?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+One possible solution is $f(x) = \sqrt{x},\ g(x) = x^2 + 2$. Then
+\begin{equation}
+  f(g(x)) = f(x^2 + 2) = \sqrt{x^2 + 2} = h(x).
+\end{equation}
+Alternatively, we could pick $f(x) = \sqrt{x + 2},\ g(x) = x^2$. Then
+\begin{equation}
+  f(g(x) = f(x^2) = \sqrt{x^2 + 2} = h(x).
+\end{equation}
+Are there still more besides?
+:::
+::::
