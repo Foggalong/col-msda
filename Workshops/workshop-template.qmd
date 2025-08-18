@@ -1,58 +1,31 @@
 ---
 title: "Workshop Template"
-format:
-  html:
-    number-sections: true
-params:
-  show_solutions: true
+answers: false
 ---
 
-```{r}
-#| echo: false
-source("solution.R")
-```
+Please attempt all exercises to the best of your ability.
 
-## Quarto
+## Multiplication
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+What is $3\times2$?
 
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this 
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
-
-### {}
-
-What is 2+2?
-
-::: `r solution()`
-So the solution to this problem is obviously
-
-\begin{equation}
-  1+1 = 2,
-\end{equation}
-
-rather than $1+1 = 4$.
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+We can think of this asking for '3 lots of 2', so
+$$
+  3\times2 = 2 + 2 + 2 = 6.
+$$
 :::
 
-## Formatting Maths
-
-Using the example of linear regression, we can format maths as follows: Given response $y$ and **single** predictor $x$, this model fits to the equation
-
-```{=tex}
-\begin{equation}
-  y = \beta_{0} + \beta_{1}x.
-\end{equation}
-```
+:::{.callout-note}
+Alternatively we could think of it as '3 added 2 times', so
+$$
+  3 \times 2 = 3 + 3 = 6.
+$$
+For this we can see that
+$$
+  3 \times 2 = 2 \times 3,
+$$
+which will be true for any number we try. This property of multiplication is called **commutativity**.
+:::
+::::
