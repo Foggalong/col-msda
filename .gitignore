@@ -45,5 +45,10 @@ docs/
 # translation temp files
 po/*~
 
+# Quarto build files
+*.html
+*_files/
+*.quarto/
+
 # RStudio Connect folder
 rsconnect/
