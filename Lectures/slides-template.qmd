@@ -1,16 +1,6 @@
 ---
 title: "Name of Lecture"
 subtitle: "Lecture $n$ - FNDN07012"
-format:
-  revealjs:
-    smaller: true
-    theme: [default, edtheme.scss]
-slide-number: true
-progress: false
-title-slide-attributes:
-  data-background-color: "#041E42"
-  data-color: "#d6d6d6"
-logo: white_logo.png
 ---
 
 ## Placeholder
