@@ -1,6 +1,6 @@
 ---
 title: "Workshop Template"
-answers: false
+answers: false  # toggle true/false to show solutions
 ---
 
 Please attempt all exercises to the best of your ability.
