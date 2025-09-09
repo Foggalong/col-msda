@@ -16,8 +16,8 @@ base_axes <- function(a, b) {
   # shorthand to set up Cartesian axes over a < x < b 
   ggplot(data.frame(x=c(a, b)), aes(x=x)) +
   # add axis lines to help guide plots
-    geom_vline(xintercept=0, colour="grey") +
-    geom_hline(yintercept=0, colour="grey")
+  geom_vline(xintercept=0, colour="grey") +
+  geom_hline(yintercept=0, colour="grey")
 }
 ```
 
@@ -29,7 +29,7 @@ An example prompt might look like
 
 > Can you create 5 examples of questions similar to "What does 5a + 3b + 2a + b + 5c simplify to?" using a variety of phrasing and presentation technique.
 
-As we've seen, generative AI isn't always great at solving the problems it creates! Instead check your solutions to these problems using a tool like [Wolfram Alpha](https://www.wolframalpha.com/input?i=What+does+5a+%2B+3b+%2B+2a+%2B+b+%2B+5c+simplify+to%3F) or [Desmos](https://www.desmos.com/calculator/clqqw0vgvu).
+As we've seen, generative AI isn't always great at solving the problems it creates! Instead check your solutions to these problems using a tool like [Wolfram Alpha](https://www.wolframalpha.com/input?i=What+does+5a+%2B+3b+%2B+2a+%2B+b+%2B+5c+simplify+to%3F), [Desmos](https://www.desmos.com/calculator/clqqw0vgvu), or even just a scientific calculator.
 
 ## Simplifying Expressions
 
