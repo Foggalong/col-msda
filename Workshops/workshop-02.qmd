@@ -1,0 +1,206 @@
+---
+title: "Exponentials & Logs"
+answers: false  # toggle true/false to show solutions
+---
+
+```{r}
+#| label: r-setup
+#| echo: false
+#| warning: false
+#| message: false
+#| cache: true
+options(htmltools.dir.version = FALSE)
+library(tidyverse)
+
+base_axes <- function(a, b) {
+  # shorthand to set up Cartesian axes over a < x < b 
+  ggplot(data.frame(x=c(a, b)), aes(x=x)) +
+  # add axis lines to help guide plots
+  geom_vline(xintercept=0, colour="grey") +
+  geom_hline(yintercept=0, colour="grey")
+}
+```
+
+## Calculations
+
+These questions review how exponentials and logarithms are used in calculations and visualisations.
+
+1. Use a scientific calculator to find $2^12$ and $e^5$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+On a standard scientific calculator, powers can be found using a button that looks like $\square^{\square}$, where each '$\square$' is an input to fill. Using this, we find $2^12 = `r 2**12`$.
+
+Powers of $e$ are special though, and often get their own button that looks like $e^{\square}$. Using this, we find $e^5 = `r round(exp(5), 5)$ (to five decimal places).
+:::
+::::
+
+2. Use a scientific calculator to find $\log_{2}(512)$, $\log_{10}(1000)$, and $\log{e}(2.7)$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Remembering that if $a^x = b$, then $x = \log_{a}(b)$, we could maybe reason these out without a calculator. However, the aim here is to get to grips with logs on calculators rather than solving log equations.
+
+The most general log button on a calculator looks like $\log_{\square}(\square)$. Here the first $\square$ is $a$ (the 'base') and the second $\square$ is $b$ (the 'power'). For $a = 2$ and $b = 512$, we get $\log_{2}(512) = `r log(512, base=2)`$. That is, $2^9 = 512$.
+
+Similar to this though is another button: $\log_{\square}$. This is a shortcut for $\log_{10}(\square)$. Using this, we get $\log_{10}(1000) = `r log(1000, base=10)`$. That is, $10^3 = 1000$.
+
+Finally, logs with base $e$ ('natural logs') have a special button, $\ln(\square)$.[^latin_ln]. This gives $\ln(2.7) = `r ln(2.7)$. This being about one makes sense, since $e \approx 2.7$.
+
+[latin_ln]: This is an abbreviation of the Latin, _logarithmus naturali_.
+:::
+
+:::{.callout-warning}
+On older calculators or software, $\log(\square)$ may be used to denote $\log_{e}$ rather than $\log_{10}$. For example, in the R coding language, 
+
+```{r}
+log(1000)
+```
+
+which doesn't agree with our calculator answer for $\log(1000)$. However,
+
+```{r}
+log(2.7)
+```
+
+which is the calculator answer for $\ln(2.7)$ though! In this course we will always use $\log$ to mean $\log_{10}$, but if you use external resources it's important to double check which notation is being used.
+:::
+::::
+
+3. If $3^x + 19 = 100$, what's $x$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+While this equation looks more intimidating that a linear or quadratic equation, we can approach it in the same way by performing a sequence of operations to both sides of the equality. Subtracting $19$ from both sides gives
+$$
+  3^x + 19 - 19 = 100 - 19 \quad\Rightarrow\quad 3^x = 81.
+$$
+Taking $\log_3$ of both sides then leads to
+$$
+  \log_{3}(3^x) = \log_{3}(81) \quad\Rightarrow\quad x = \log_{3}(81)
+$$
+since the $\log$ 'undoes' the power. In our calculator, this gives $x = 4$.
+
+We can verify that, since $3^4 = 3\times 3\times 3\times 3 = 9\times 9 = 81$.  
+:::
+::::
+
+4. Using Geogebra or Desmos, plot the graphs of $y = e^x$ and $y = \ln(x)$. 
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+
+The plots that you get should appear similar to the ones below. 
+
+```{r}
+#| label: log-exp-plot
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of exp(x) and log(x) on Cartesian axes."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+base_axes(0, 5) +
+  stat_function(fun=function(x){exp(x)}, colour="lightskyblue") +
+  stat_function(fun=function(x){log(x)}, colour="darkorange")
+```
+
+From this, what are the domain and range of $e^x$ and $\ln(x)$?
+:::
+::::
+
+## Modelling
+
+Within humanities and social sciences, our main interest in exponentials and logs is how they can be used to model complicated phenomena.
+
+### Continuous Interest
+
+Given an initial investment $Q$ with an interest rate of $r$, the amount of money at time $t$ can be found as
+$$
+  P(t) = Q e^{rt}.
+$$
+
+[Source](https://en.wikipedia.org/wiki/Compound_interest#Continuous_compounding)
+
+1. If the initial investment was £100, with a continuous interest rate of 1.25 applied daily, how much money would there be after 365 days?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+From the question, $Q = 100$ and $r = 1.25$. Therefore at $t = 365$,
+$$
+  P(365) = 100 \times e^{1.25 \times 365} = 100e^{456.25}
+$$
+which is $P = `r round(100*exp(456.25), 3)`$, or £`r round(100*exp(456.25), 2)` putting the units back in.
+:::
+::::
+
+2. Using a tool of your choice, plot $y = P(x)$. What is the meaning of the $y$-intercept?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Given the values of $Q$ and $r$ from the question, the plot should look roughly as follows
+
+```{r}
+#| label: continuous-interest
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of P(t) on Cartesian axes."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+base_axes(-1, 5) +
+  stat_function(fun=function(x){100*exp(1.25*x)}, colour="lightskyblue")
+```
+
+The $y$-intercept happens when $x = 0$, which gives $P = Qe^{0}$. This simplifies to $P = Q$. In other words, the $y$-intercept is the initial investment.
+:::
+::::
+
+3. Plot $y = P(x)$ with a **logarithmic** $y$-axis. What's the gradient now?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+This is what's called a log-linear plot, and it should look for these values something like the below.
+
+```{r}
+#| label: continuous-interest
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of ln(P(t)) on Cartesian axes."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+base_axes(-1, 5) +
+  stat_function(fun=function(x){log(100) + 1.25*x}, colour="lightskyblue")
+```
+
+Either using $m = \frac{y_2 - y_1}{x_2 - x_1}$ or funcionality in our plotting tool, we find that the gradient of this straight line is 1.25, which was $r$ exactly!
+:::
+::::
+
+<!-- ### Population Growth
+
+$$
+  P(t) = \frac{P_0 \cdot K}{P_0 + (K - P_0)e^{-rt}}
+$$
+
+[Source](https://en.wikipedia.org/wiki/Population_growth#Logistic_equation)
+
+### Sound
+
+[Source](https://en.wikipedia.org/wiki/Decibel)
+
+$$
+  d = 10\log\left(\frac{p}{p_{0}}\right)
+$$
+
+Here:
+- $p$, intensity or power of the sound
+- $p_0$, intensity of the faintest audible sound
+- $d$, volume in decibels -->
