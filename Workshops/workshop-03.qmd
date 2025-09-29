@@ -1,0 +1,263 @@
+---
+title: "Sequences & Series"
+answers: false  # toggle true/false to show solutions
+---
+
+A couple of these problems mention R, but no coding is required! They are mostly pen and paper exercises, though a few of them ask you to create plots or look something up online.
+
+## Decibel Sequence
+
+The solution to the decibel problem in last week's workshop used a little snippet of R code, 
+
+```{r}
+#| label: decibel-conversions
+#| echo: true
+10**(seq(from=0, to=110, by=10)/10)
+```
+
+In this is R's `seq` function which generates a sequence of values. It takes some starting value `from`, a final value `to`, and a common difference `by`, then uses those to create an arithmetic sequence.
+
+1. How would the sequence `seq(from=0, to=110, by=10)` be defined as $a_n$ mathematically?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+We are told that the starting value is `from=0`, so $a_1 = 0$. We're also told that the common difference is `by=10`, so $d = 10$. That means the $n^{\text{th}}$ term of the arithmetic sequence is
+$$
+  a_n = a_1 + (n-1)d = 0 + (n-1)10 = 10n - 10.
+$$
+This gives values $0$, $10$, $20$, $30$, and so on.
+:::
+::::
+
+2. Code `seq(...)/10` divides this by ten. What's the definition $b_n$ of the divided sequence?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+If the $n^{\text{th}}$ term of an arithmetic sequence is defined $a_n = 10n - 10$, and we then divide every term by ten, the new sequence would be
+$$
+  b_n = \frac{a_n}{10} = \frac{10n - 10}{10} = n - 1.
+$$
+This gives values $0$, $1$, $2$, $3$, and so on. In other words, these are just the integers starting from zero!
+:::
+::::
+
+3. Finally, in `10**(...)`, each term is used as a power of ten. What's this final sequence, $c_n$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Either by taking these powers of ten ($10^0$, $10^1$, $10^2$, _etc_.) or looking at the code output above, we can see that this is a geometric progression with a common ratio $r = 10$ and an initial value $a = 10^0 = 1$. Mathematically then, this is defined as
+$$
+  c_n = ar^{n-1} = 1 \cdot 10^{n-1} = 10^{n-1}.
+$$
+If we check, this gives values $1$, $10$, $100$, $1000$, and so on, as expected.
+:::
+::::
+
+## Sequence to Series
+
+A common pitfall is confusing the terms 'sequence' (a list) and 'series' (a sum). For example, the strictly positive integers $a_1 = 1$, $a_2 = 2$, _etc_ are a sequence $a_n = n$. On the other hand their sum, $1 + 2 + \ldots$, is a series.
+
+1. What is $\sum_{n=1}^{10} a_n$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+To translate the mathematical notation, what is the sum of the strictly positive integers from one to ten?
+
+There's a couple ways we can go about this. By arithmetic, we could just calculate
+$$
+  1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10 = 55.
+$$
+Some calculators have a button that looks like  $\sum_{\square}^{\square}\square$; this could be used as $\sum_{1}^{10}{X} = 55$.
+:::
+::::
+
+2. What's the sum of the first $n$ strictly positive integers?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+An alternative, over-the-top solution to the previous question would have been to use the formula for summing the first $n$ terms of an arithmetic sequence $a_m$:
+$$
+  \sum_{m=1}^n a_m = \frac{n(a_1 + a_n)}{2}.
+$$
+Applied there would give $\sum_{n=1}^{10} a_m = \frac{1}{2} \cdot 10 \cdot (1 + 10) = 55$. However we want to sum the first $n$, not just the first ten. Therefore,
+$$
+  \sum_{n=1}^{10} a_m = \frac{1}{2} \cdot n \cdot (1 + n) = \frac{n^2 + n}{2}.
+$$
+There are other ways to show this _without_ using the formula above. Can you find such a way?
+:::
+::::
+
+3. After seeing a video online, Charlie is convinced $\sum_{n=1}^{\infty} n = -\frac{1}{12}$. Justify why this is not true.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+If we define the sum of the first $n$ integers as
+$$
+  S_n = \sum_{m=1}^n m = \frac{n^2 + n}{2},
+$$
+then we could justify $S_{\infty} \neq -\frac{1}{12}$ by showing (either algebraically or graphically) that $S_n$ is positive for all $n$.
+
+```{r}
+#| label: integer-partial-sums
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of ln(P(t)) on Cartesian axes."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+library(ggplot2)
+
+xvar = seq(1, 50, by=1)
+yvar = 0.5*(xvar**2 + xvar) 
+
+ggplot(data.frame(), aes(x=xvar, y=yvar)) +
+  geom_point(shape=1) +
+  labs(x="n", y="sum of first n integers")
+```
+Since the sequence of 'partial sums' is positive, it would be contradictory for their limit to be negative!
+:::
+
+:::{.callout-note}
+There are lots of websites and videos that explore $S_{\infty} \neq -\frac{1}{12}$. As shown in [this video by Numberphile](https://www.youtube.com/watch?v=w-I6XTVZXww), it's achieved by using a non-standard method for analysing infinite sums.
+:::
+::::
+
+## Hui Shi's Stick
+
+Long before the advent of analytical methods for working with infinite series, ancient philosophers wrestled with their seemingly paradoxical nature. For example in the Chinese _Zhuangzi_ (~300 BCE), 
+
+> If from a stick a foot long you every day take the half of it, in a myriad ages it will not be exhausted.
+
+<!-- Zhuangzi, chapter 33 (Legge translation) -->
+
+Lets say that the length of the stick on day $d$ is denoted $L_d$.
+
+1. Find an expression for $L_d$ in terms of $L_{d-1}$ (_i.e._ the day before). 
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+The stick is initially 1 foot long, so $L_0 = 1$. The stick on any day $d$ is half the length of what it was the day before, so $L_d = \frac{1}{2}L_{d-1}$. That's sufficient, though note; together these give an **inductive definition**:
+$$
+  L_{d} = \begin{cases}
+    1 & \text{if}~d = 0, \\
+    \frac{1}{2}L_{d-1} & \text{if}~d\geq1.
+  \end{cases}
+$$
+This is neat, but not very practical to work with.
+:::
+
+:::{.callout-note}
+Interpreting the 'take' literally, you might alternatively formulate this as $L_d = L_{d-1} - \frac{1}{2}L_{d-1}$. This quickly simplifies to give the same inductive definition as above.
+:::
+::::
+
+2. Find an expression for $L_d$ that only depends on $d$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+We could work this out by pattern recognition, first looking at $L_d$ for range of $d$:
+
+$d$ | $0$ | $1$ | $2$ | $3$ | $4$ | $5$
+:-: | :-: | :-: | :-: | :-: | :-: | :-:
+$L_d$ | $1$ | $\frac{1}{2}$ | $\frac{1}{4}$ | $\frac{1}{8}$ | $\frac{1}{16}$ | $\frac{1}{32}$
+
+After a bit of head scratching we might notice that $L_d = \frac{1}{2^d}$. More intuitively though, the initial statement has us half the length of the stick every day. That means multiplying by a factor of $\frac{1}{2}$ every day, which after $d$ days will be
+$$
+  \underbrace{\frac{1}{2} \times \frac{1}{2} \times \cdots \frac{1}{2}}_{d~\text{times}} = \frac{1}{2^d}.
+$$
+:::
+::::
+
+Charlie argues that our formulation _can't_ be correct because the paradox says to 'take' half the stick away, so any correct formula must involve a subtraction. They present the following answer:
+$$
+  L_d = 1 - \sum_{n=1}^d \frac{1}{2^n}.
+$$
+
+3. Is Charlie's argument correct? How does their answer compare to yours?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Charlie's argument is incorrect; for any $x$, both $\frac{x}{2}$ and $x - \frac{x}{2}$ are equivalent (see the note above). However, their answer is algebraically the same as ours!
+
+Charlie's sum looks a lot like a geometric series, only starting from $n = 1$ rather than $n = 0$. We can still use this however, since the sum from $n = 0$ is the same as the zeroth term plus the sum from $n = 1$:
+$$
+  \sum_{n=0}^d \frac{1}{2^n} = \frac{1}{2^0} + \sum_{n=1}^d \frac{1}{2^n} \quad\Rightarrow\quad \sum_{n=1}^d \frac{1}{2^n} = \sum_{n=0}^d \left(\frac{1}{2^n}\right) - 1.
+$$
+Then, using the equation for geometric series,
+$$
+  \sum_{n=0}^d \frac{1}{2^n} = \frac{1 - \frac{1}{2^{d+1}}}{1 - \frac{1}{2}} = \frac{1 - \frac{1}{2^{d+1}}}{\frac{1}{2}} = 2 \left( 1 - \frac{1}{2^{d+1}} \right) = 2 - \frac{1}{2^d}.
+$$
+It follows that
+$$
+  L_d = 1 - \sum_{n=1}^d \frac{1}{2^n} = 1 - \left(2 - \frac{1}{2^d} - 1\right) = \frac{1}{2^d},
+$$
+just as we found.
+:::
+::::
+
+## Weird & Wonderful
+
+There are many weird and wonderful sequences and series. A common one you might have heard of is Fibonacci's sequence, defined
+$$
+  F_n = \begin{cases}
+    0 & \text{if}~n = 0, \\
+    1 & \text{if}~n = 1, \\
+    F_{n-1} + F_{n-2} & \text{if}~n \geq 2.
+  \end{cases}
+$$
+This gives 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, and so on; this links into the [Golden Ratio](https://en.wikipedia.org/wiki/Fibonacci_sequence#Definition).
+
+![Tiled squares representing the Fibonacci sequence, Romain (2022), CC-BY-SA.](https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Fibonacci_Squares.svg/640px-Fibonacci_Squares.svg.png){width=50%}
+
+The _Online Encyclopaedia of Integer Sequences_ (OEIS) tracks this as sequence [A000045](https://oeis.org/A000045) (along with 388839 others) and includes some more mathematical, historical, and usage information.
+
+1. Define a general sequence $a_n$ however you wish, and calculate its first eight terms are.
+
+2. Search those terms in [OEIS](https://oeis.org/) to see if it's a existing, named sequence.
+
+3. Is there a geometric interpretation of the sequence you've found?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+This is an open ended question, but here's an example of one I did. I was looking at the definition of Fibonacci's sequence and wondered: _what would happen if we multiplied rather than added?_
+
+To avoid the zero term, I tweaked the initial two values and defined
+$$
+  a_n = \begin{cases}
+    1 & \text{if}~n = 0, \\
+    2 & \text{if}~n = 1, \\
+    a_{n-1} + a_{n-2} & \text{if}~n \geq 2.
+  \end{cases}
+$$
+I could calculate the first eight terms by hand, but I coded the definition in R as
+
+```{r}
+a <- function(n) {
+  # first two terms are 1 and 2
+  if (n == 0 || n == 1) { return(n+1) }
+  # Fibonacci rule, but * rather than +
+  return(a(n-1)*a(n-2))
+}
+```
+
+From which I got the first eight terms
+
+```{r}
+#| echo: false
+terms <- c()
+for (n in 0:7) { terms <- c(terms, a(n)) }
+terms
+```
+
+In OEIS this is [A000301](https://oeis.org/search?q=1+2+2+4+8+32+256+8192), which is described as
+
+> ```
+> a(n) = a(n-1)*a(n-2) with a(0) = 1, a(1) = 2; also a(n) = 2^Fibonacci(n).
+> ```
+
+That first part is how we defined it, but can we show why $a_n = 2^{F_n}$?
+:::
+::::
