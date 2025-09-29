@@ -183,8 +183,6 @@ Related to this explanation, there is a formula for computing the gradient; give
   m = \frac{y_2 - y_1}{x_2 - x_1}.
 \end{equation}
 :::
-
-
 ::::
 
 ## Quadratic Equations
@@ -327,7 +325,6 @@ This can be confirmed as correct by looking at the plot of $y = f(x)$.
 #| fig-width: 4
 #| fig-height: 4
 #| cache: true
-
 
 base_axes(-2, 2) +
   stat_function(fun=function(x){x}, n=2, colour="grey") +

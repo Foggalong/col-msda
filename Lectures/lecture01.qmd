@@ -221,7 +221,7 @@ Speaker notes go here.
 
 ## Function Machines
 
-You might remember the idea of a function machine" from school.
+You might remember the idea of a "function machine" from school.
 
 ::: {image}
 ![Example depiction of a function machine _(Bill Bailey, 2009)_.](img/Function_machine.png){width=20%}
