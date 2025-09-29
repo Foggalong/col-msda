@@ -2,6 +2,8 @@
 title: "Exponentials & Logs"
 answers: false  # toggle true/false to show solutions
 ---
+ 
+These problems look at exponentials and logs, exploring how they're used to model various real-world phenomena. You'll need a scientific calculator and a graphing tool like [Geogebra](https://www.geogebra.org/calculator) or [Desmos](https://www.desmos.com/calculator).
 
 ```{r}
 #| label: r-setup
