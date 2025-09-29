@@ -25,17 +25,17 @@ base_axes <- function(a, b) {
 
 These questions review how exponentials and logarithms are used in calculations and visualisations.
 
-1. Use a scientific calculator to find $2^12$ and $e^5$.
+1. Use a scientific calculator to find $2^{12}$ and $e^5$.
 
 ::::{.content-hidden unless-meta=answers}
 :::{.callout-tip title=Solution}
-On a standard scientific calculator, powers can be found using a button that looks like $\square^{\square}$, where each '$\square$' is an input to fill. Using this, we find $2^12 = `r 2**12`$.
+On a standard scientific calculator, powers can be found using a button that looks like $\square^{\square}$, where each '$\square$' is an input to fill. Using this, we find $2^{12} = `r 2**12`$.
 
-Powers of $e$ are special though, and often get their own button that looks like $e^{\square}$. Using this, we find $e^5 = `r round(exp(5), 5)$ (to five decimal places).
+Powers of $e$ are special though, and often get their own button that looks like $e^{\square}$. Using this, we find $e^5 = `r round(exp(5), 5)`$ (to five decimal places).
 :::
 ::::
 
-2. Use a scientific calculator to find $\log_{2}(512)$, $\log_{10}(1000)$, and $\log{e}(2.7)$.
+2. Use a scientific calculator to find $\log_{2}(512)$, $\log_{10}(1000)$, and $\log_{e}(2.7)$.
 
 ::::{.content-hidden unless-meta=answers}
 :::{.callout-tip title=Solution}
@@ -45,10 +45,10 @@ The most general log button on a calculator looks like $\log_{\square}(\square)$
 
 Similar to this though is another button: $\log_{\square}$. This is a shortcut for $\log_{10}(\square)$. Using this, we get $\log_{10}(1000) = `r log(1000, base=10)`$. That is, $10^3 = 1000$.
 
-Finally, logs with base $e$ ('natural logs') have a special button, $\ln(\square)$.[^latin_ln]. This gives $\ln(2.7) = `r ln(2.7)$. This being about one makes sense, since $e \approx 2.7$.
-
-[latin_ln]: This is an abbreviation of the Latin, _logarithmus naturali_.
+Finally, logs with base $e$ ('natural logs') have a special button, $\ln(\square)$.[^latin_ln] This gives $\ln(2.7) = `r log(2.7)` \approx 1$. This being about one makes sense, since $e \approx 2.7$.
 :::
+
+[^latin_ln]: This is an abbreviation of the Latin, _logarithmus naturali_.
 
 :::{.callout-warning}
 On older calculators or software, $\log(\square)$ may be used to denote $\log_{e}$ rather than $\log_{10}$. For example, in the R coding language, 
@@ -85,7 +85,7 @@ We can verify that, since $3^4 = 3\times 3\times 3\times 3 = 9\times 9 = 81$.
 :::
 ::::
 
-4. Using Geogebra or Desmos, plot the graphs of $y = e^x$ and $y = \ln(x)$. 
+4. Using [Geogebra](https://www.geogebra.org/calculator) or [Desmos](https://www.desmos.com/calculator), plot the graphs of $y = e^x$ and $y = \ln(x)$. 
 
 ::::{.content-hidden unless-meta=answers}
 :::{.callout-tip title=Solution}
@@ -121,18 +121,18 @@ Given an initial investment $Q$ with an interest rate of $r$, the amount of mone
 $$
   P(t) = Q e^{rt}.
 $$
+This is a type of [compound interest](https://en.wikipedia.org/wiki/Compound_interest#Continuous_compounding).
 
-[Source](https://en.wikipedia.org/wiki/Compound_interest#Continuous_compounding)
 
-1. If the initial investment was £100, with a continuous interest rate of 1.25 applied daily, how much money would there be after 365 days?
+1. If the initial investment was £100, with a continuous interest rate of 1.7% applied daily, how much money would there be after 365 days?
 
 ::::{.content-hidden unless-meta=answers}
 :::{.callout-tip title=Solution}
-From the question, $Q = 100$ and $r = 1.25$. Therefore at $t = 365$,
+From the question, $Q = 100$ and $r = 0.017$. Therefore at $t = 365$,
 $$
-  P(365) = 100 \times e^{1.25 \times 365} = 100e^{456.25}
+  P(365) = 100 \times e^{0.017 \times 365} = 100e^{6.205}
 $$
-which is $P = `r round(100*exp(456.25), 3)`$, or £`r round(100*exp(456.25), 2)` putting the units back in.
+which is $P = `r round(100*exp(6.205), 3)`$, or £49,521.90 putting the units back in.
 :::
 ::::
 
@@ -167,7 +167,7 @@ The $y$-intercept happens when $x = 0$, which gives $P = Qe^{0}$. This simplifie
 This is what's called a log-linear plot, and it should look for these values something like the below.
 
 ```{r}
-#| label: continuous-interest
+#| label: continuous-interest-log
 #| echo: false
 #| out-width: 60%
 #| fig-align: 'center'
@@ -177,30 +177,123 @@ This is what's called a log-linear plot, and it should look for these values som
 #| fig-height: 2
 #| cache: true
 base_axes(-1, 5) +
-  stat_function(fun=function(x){log(100) + 1.25*x}, colour="lightskyblue")
+  stat_function(fun=function(x){log(100) + 1.25*x}, colour="lightskyblue") +
+  labs(x="x", y="log(y)")
 ```
 
-Either using $m = \frac{y_2 - y_1}{x_2 - x_1}$ or funcionality in our plotting tool, we find that the gradient of this straight line is 1.25, which was $r$ exactly!
+Either using $m = \frac{y_2 - y_1}{x_2 - x_1}$ or functionality in our plotting tool, we find that the gradient of this straight line is 1.25, which was $r$ exactly!
 :::
 ::::
 
-<!-- ### Population Growth
+### Population Growth
+
+Given an initial population size $P_0$, a growth rate $r$ per day, and a maximum feasible population size $K$, the population on day $t$ is [modelled logistically](https://en.wikipedia.org/wiki/Population_growth#Logistic_equation) as
 
 $$
-  P(t) = \frac{P_0 \cdot K}{P_0 + (K - P_0)e^{-rt}}
+  P(t) = \frac{P_0 \cdot K}{P_0 + (K - P_0)e^{-rt}}.
 $$
 
-[Source](https://en.wikipedia.org/wiki/Population_growth#Logistic_equation)
+```{r}
+#| label: population-growth-model
+#| echo: false
+P0 <- 10
+K <- 500
+rate <- 0.5
+
+growth_model <- function(x) {
+  (P0*K)/(P0 + (K-P0)*exp(-rate*x))
+}
+```
+
+1. Plot this model for $P_0 = `r P0`$, $K = `r K`$, and $r = `r rate`$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Given the values from the question, the plot should look roughly as follows
+
+```{r}
+#| label: population-growth-plot
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of ln(P(t)) on Cartesian axes."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+base_axes(0, 20) +
+  stat_function(fun=growth_model, colour="lightskyblue") +
+  labs(x="t", y="P(t)")
+```
+
+In literature, this is sometimes called a 'logistic curve' or a 'J-curve'.
+:::
+::::
+
+2. What is the range of this model for a domain $t\geq0$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Either from the plot, or by exploring different values of $t$ in the model, we can see that the minimum population is $P(t) = 10$ and its maximum is $P = 500$, with a continuous, increasing line between them.
+
+This makes the range $10 \leq P(t) \leq 500$. Generalising this, the range of the model is $P_0 \leq P(t) \leq K$.
+:::
+::::
+
+3. What happens if we extend the domain to $t < 0$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+There's two parts to this question. Practically, if we plot $P(t)$ for $t<0$, we see that the model rapidly decreases as $t$ does. In fact, the new range of the model is $0\leq P(t)\leq K$.
+
+```{r}
+#| label: population-growth-plot-negative
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of ln(P(t)) on Cartesian axes."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+base_axes(-6, 6) +
+  stat_function(fun=growth_model, colour="lightskyblue") +
+  labs(x="t", y="P(t)")
+```
+
+But what does this mean practically? is this modelling the population numbers in the past? In short, no. Models are only accurate on the domain they were defined for, and the logistic population model is only well defined on $t\geq0$. 
+:::
+::::
 
 ### Sound
 
-[Source](https://en.wikipedia.org/wiki/Decibel)
+You may have heard of [decibel](https://en.wikipedia.org/wiki/Decibel) as a measure of how 'loud' something is. You may even have seen a chart like the one below that compare different sounds.
 
-$$
-  d = 10\log\left(\frac{p}{p_{0}}\right)
-$$
+![Generator Decibel Comparison Chart, Tom Holland (2022), CC-BY-SA.](https://upload.wikimedia.org/wikipedia/commons/f/fd/Generator-decibel-db-comparison_chart.png){width=40%}
 
-Here:
-- $p$, intensity or power of the sound
-- $p_0$, intensity of the faintest audible sound
-- $d$, volume in decibels -->
+What you might not known though is that decibels are a logarithmic scale, defined by the equation
+$$
+  d = 10\log\left(\frac{p}{p_{0}}\right).
+$$
+Here $p$ is the intensity or power of the sound (measured in Watts), $p_0$ is intensity of the faintest audible sound, and $d$ is volume in decibels.
+
+
+Using this equation with $p_0 = 1$ Watt, create a version of the graphic above that uses power, rather than decibels, to measure the sound.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+First off, we need to find an equation for power given a volume in decibels. If $p_0 = 1$, the above simplifies to $d = 10\log(p)$. This is rearranged to $d/10 = \log(p)$ and finally $10^{d/10} = p$.
+
+Now you can work through the twelve conversions either by hand or using a calculator. Later in the course, we'll see how this could be easily done in R.
+
+```{r}
+#| label: decibel-conversions
+#| echo: true
+10**(seq(from=0, to=110, by=10)/10)
+```
+
+Whatever your method, you'll find that these are just powers of ten! From here, we can recreate the graphic using the power values.
+:::
+::::
