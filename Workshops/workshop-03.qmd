@@ -81,7 +81,7 @@ $$
 $$
 Applied there would give $\sum_{n=1}^{10} a_m = \frac{1}{2} \cdot 10 \cdot (1 + 10) = 55$. However we want to sum the first $n$, not just the first ten. Therefore,
 $$
-  \sum_{n=1}^{10} a_m = \frac{1}{2} \cdot n \cdot (1 + n) = \frac{n^2 + n}{2}.
+  \sum_{m=1}^{n} a_m = \frac{1}{2} \cdot n \cdot (1 + n) = \frac{n^2 + n}{2}.
 $$
 There are other ways to show this _without_ using the formula above. Can you find such a way?
 :::
