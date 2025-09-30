@@ -1,0 +1,250 @@
+---
+title: "Integration"
+answers: false  # toggle true/false to show solutions
+---
+
+Remember the advice from week 1: if there's any particular question you find difficult, try using [ELM](https://elm.edina.ac.uk/elm/elm) to create some similar questions to practice with before moving on to harder questions.
+
+## Integrals
+
+1. Find $\int f(x)~\text{d}x$ when $f(x) = x^2$, $f(x) = 3$, and $f(x) = x^3 + 3x^2 + 3x + 1$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+By the polynomial rule, these will be
+$$
+  \frac{x^3}{3} + C,\qquad 3x + C, \qquad \frac{1}{4}x^4 + x^3 + \frac{3}{2}x^2 + x + C,
+$$
+where $C$ is an unknown constant of integration.
+:::
+::::
+
+2. Find the area under the previous curves between $0$ and $1$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+This is asking for the definite integral $\int_0^1 f(x)~\text{d}x$ for each $f$. We have already done the indefinite integrals, so we can use these to our advantage:
+\begin{align*}
+  \int_0^1 x^2~\text{d}x &= \left[\frac{x^3}{3} +C\right]_0^1 = \frac{1^3}{3} + C - \frac{0^3}{3} - C = \frac{1}{3}, \\
+  & \\
+  \int_0^1 3~\text{d}x &= \left[3x + C\right]_0^1 = 3 + C - 0 - C = 3, \\
+  & \\
+  \int_0^1 x^3 + 3x^2 + 3x + 1~\text{d}x &= \left[\frac{1}{4}x^4 + x^3 + \frac{3}{2}x^2 + x + C\right]_0^1 = \frac{1}{4} + 1 + \frac{3}{2} + 1 = \frac{15}{4}.
+\end{align*}
+Note that the $C$ here didn't make any difference. Is this always the case?
+:::
+::::
+
+3. Find $\int f(t)~\text{d}t$ when $f(t) = 2e^{2t}$, $f(t) = 2\cos(2t)$, and $f(t) = 1/\cos^2(t)$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+These look more complicated than most of the examples we've seen so far. However, these three functions are exactly the derivatives of a question from last week! That means, without further work, we can use the Fundamental Theorem of Calculus to say:
+$$
+  \int 2e^{2t}~\text{d}t = e^{2t} + C, \quad \int 2\cos(2t)~\text{d}t = \sin(2t) + C, \quad \int \frac{1}{\cos^2(t)}~\text{d}t = \tan(t) + C.
+$$
+:::
+::::
+
+## Using Parts
+
+The integration by parts formula,
+$$
+  \int u(x)v'(x)~\text{d}x = u(x)v(x) - \int u'(x)v(x)~\text{d}x,
+$$
+gives us a way to break down complicated integrals that involve products.
+
+1. Find $I = \int xe^x~\text{d}x.$
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+If $u(x) = x$, then $u'(x) = 1$. If $v'(x) = e^x$, then $$
+  v(x) = \int v'(x)~\text{d}x = \int e^x~\text{d}x = e^x.
+$$
+Putting this together,
+$$
+  \int xe^x~\text{d}x = xe^x - \int e^x~\text{d}x = xe^x - e^x + C,
+$$
+where $C$ is an unknown constant of integration.
+:::
+::::
+
+2. Find $I_2 = \int x^2 e^x~\text{d}x.$
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+This looks similar to the previous problem, only with $x^2$. Adjusting our working, if $u(x) = x^2$, then $u'(x) = 2x$. By parts,
+$$
+  \int x^2 e^x~\text{d}x = x^2 e^x - \int 2xe^x~\text{d}x.
+$$
+But this final integral is the same as the previous question!
+\begin{align*}
+  \int x^2 e^x~\text{d}x &= x^2 e^x - 2\int xe^x~\text{d}x \\ 
+                         &= x^2 e^x -2\left( xe^x - e^x + C \right) \\
+                         &= x^2 e^x -2xe^x + 2e^x + D,
+\end{align*}
+where $D = -2C$ is again just a constant of integration.
+:::
+::::
+
+3. Find $I_3 = \int x^3 e^x~\text{d}x.$
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Following the same plan, if $u(x) = x^3$, then $u'(x) = 3x^2$. By parts,
+$$
+  \int x^3 e^x~\text{d}x = x^3 e^x - \int 3x^2 e^x~\text{d}x,
+$$
+where the final integral is three times the previous question!
+\begin{align*}
+  \int x^3 e^x~\text{d}x &= x^3 e^x - 3(x^2 e^x -2xe^x + 2e^x + D) \\
+                         &= x^3 e^x - 3x^2 e^x + 6xe^x - 6e^x + E, \\
+\end{align*}
+where $E = -3D = 6C$ is again just a constant of integration.
+:::
+::::
+
+4. Is there a formula for $I_n = \int x^n e^x~\text{d}x$, where $n$ is a strictly positive integer?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Using [Wolfram Alpha](https://www.wolframalpha.com/input?i=int+x%5En+e%5Ex+dx) doesn't turn up anything helpful; this is about spotting the pattern!
+
+There are a few features we might pick up on: alternating signs, decreasing powers of $x$, possibly even the binomial-esque coefficients. Similar to how we thought about the Fibonacci sequence, we can work with this as a sequence of integrals:
+$$
+  I_n = \begin{cases}
+    x^n e^x - n\cdot I_{n-1} & \text{if}~n>1, \\
+    xe^x + e^x + C & \text{if}~n=1.
+  \end{cases}
+$$
+
+<!-- TEACHER NOTE: this is an open ended question! The aim is for students to explore the pattern here and, beyond spotting the recursive sequence, they aren't expected to get to a conclusive answer. -->
+:::
+
+:::{.callout-note}
+Though this is enough for our purposes, we might try to follow this recursion downwards
+\begin{align*}
+  I_n &= x^n e^x - n\cdot I_{n-1} \\
+      &= x^n e^x - n\left(x^{n-1}e^x - (n-1)I_{n-2}\right) \\
+      &= x^n e^x - n\left(x^{n-1}e^x - (n-1)\left(x^{n-2}e^x - (n-2)I_{n-3}\right)\right) \\
+      &= x^n e^x - n\left(x^{n-1}e^x - (n-1)\left(x^{n-2}e^x - (n-2)\left(x^{n-3}e^x - (n-3)I_{n-4} \right)\right)\right)
+\end{align*}
+but that will carry on indefinitely. Expanding out brackets in the above  
+
+\begin{align*}
+  I_n &= x^n e^x - n\cdot I_{n-1} \\
+      &= x^n e^x - n x^{n-1}e^x + n(n-1)I_{n-2} \\
+      &= x^n e^x - n x^{n-1}e^x + n(n-1)x^{n-2}e^x - n(n-1)(n-2)I_{n-3} \\
+      &= x^n e^x - n x^{n-1}e^x + n(n-1)x^{n-2}e^x - n(n-1)(n-2)x^{n-3}e^x + n(n-1)(n-2)(n-3)I_{n-4}
+\end{align*}
+gives a _hint_ where it might be going, but it's difficult to make concrete. With some undergraduate level maths, it's possible to show that this (eventually) becomes
+$$
+  \int x^n e^x~\text{d}x = \left( \sum_{m=0}^n \left( (-1)^{n-m}\cdot \frac{n!}{m!}\cdot x^m e^x \right) \right) + C.
+$$
+:::
+::::
+
+## Areas
+
+A shape $D_n$ is defined as the space enclosed by the four line segments
+\begin{equation*}
+  \begin{matrix}
+    y = h\left(x-b\right)^n,\ 0\leq x \leq b  & \quad & y = h\left(x+b\right)^n,\ -b\leq x\leq 0 \\
+    y = -h\left(x+b\right)^n,\ -b\leq x\leq 0 & \quad & y = -h\left(x-b\right)^n,\ 0\leq x\leq b
+  \end{matrix}
+\end{equation*}
+where $b$ and $h$ are positive real numbers and $n$ is a positive integer.
+
+1. What is the area of $D_1$?
+
+:::{.callout-note title=Hint}
+What does $D_1$ look like?
+:::
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+A quick plot shows that this is just a diamond, centred on $(0,0)$ and symmetric in the $x$- and $y$-axes.
+
+```{r}
+#| label: D1
+#| echo: false
+#| warning: false
+#| message: false
+#| cache: true
+#| out-width: 30%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-width: 2
+#| fig-height: 2
+library(ggplot2)
+
+base_axes <- function(a, b) {
+  # shorthand to set up Cartesian axes over a < x < b 
+  ggplot(data.frame(x=c(a, b)), aes(x=x)) +
+  # add axis lines to help guide plots
+  geom_vline(xintercept=0, colour="grey") +
+  geom_hline(yintercept=0, colour="grey")
+}
+
+base_axes(-1,1) +
+  stat_function(fun=function(x){x-1}, colour="lightskyblue") +
+  stat_function(fun=function(x){x+1}, colour="lightskyblue") +
+  stat_function(fun=function(x){-(x-1)}, colour="lightskyblue") +
+  stat_function(fun=function(x){-(x+1)}, colour="lightskyblue") +
+  ylim(-1,1)
+```
+
+Given the topic, it might be tempting to jump straight into integrating but we can do this by shape decompositions instead! Each quadrant contains a triangle with base $b$ and height $h$, so has area $\frac{1}{2}bh$. There are four quadrants, so the total area of $D_1$ is $2bh$.
+:::
+::::
+
+2. What is the area of $D_2$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Our nice diamond now has convex sides! We can employ the same tactic as before though; each quadrant of $D_2$ contains an identical shape, just rotated or reflected from another.
+
+```{r}
+#| label: D2
+#| echo: false
+#| warning: false
+#| message: false
+#| cache: true
+#| out-width: 30%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-width: 2
+#| fig-height: 2
+
+base_axes(-1,1) +
+  stat_function(fun=function(x){(x-1)**2}, colour="lightskyblue") +
+  stat_function(fun=function(x){(x+1)**2}, colour="lightskyblue") +
+  stat_function(fun=function(x){-(x-1)**2}, colour="lightskyblue") +
+  stat_function(fun=function(x){-(x+1)**2}, colour="lightskyblue") +
+  ylim(-1,1)
+```
+
+The top right quadrant corresponds to the area under the line $y = h\left(x-b\right)^2$ between $x = 0$ and $x = b$. As an integral, this is
+\begin{align*}
+  \int_0^b h(x-b)^2~\text{d}x &= h\int_0^b x^2 - 2ax + b^2~\text{d}x \\
+                              &= h\left[\frac{x^3}{3} - bx^2 + b^2x \right]_0^b \\
+                              &= h\left(\frac{a^3}{3} - b\cdot b^2 + b^2\cdot b \right) \\
+                              &= \frac{1}{3}b^3 h.
+\end{align*}
+There are four quadrants, so the overall area of $D_2$ is $\frac{4}{3}b^3 h$.
+:::
+::::
+
+3. What role do the domains of $b$, $h$, and $n$ play?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Depending how you approached the last two questions, you may have noticed that, within a quadrant, $b$ essentially represents the 'base', $h$ represents the 'height', and $n$ represents how 'inwardly curved' it is.
+
+We said $b$ had to be positive and real. If instead we allowed $b$ to be negative, the intervals that define the line segments (_e.g._ $0\leq x\leq b$) stop making sense. If $b = -1$ for example, what $x$ satisfy $0\leq x\leq -1$?
+
+We also said $h$ had to be positive and real. However, there's a symmetry in the line segments which means if $h$ _does_ become negative then all the segments just swap roles! The area enclosed stays unchanged.
+
+Finally, we set the domain of $n$ as positive integers. If $n$ is a negative integer, then the formula still work but we don't get a nicely enclosed area. If $n$ isn't an integer, we can run into issues with taking roots of negative numbers. For example, consider what happens if $b = 1$, $h = 1$, and $n = \frac{1}{2}$.
+:::
+::::
