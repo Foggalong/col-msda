@@ -1,0 +1,305 @@
+---
+title: "Differentiation"
+answers: false  # toggle true/false to show solutions
+---
+
+```{r}
+#| label: r-setup
+#| echo: false
+#| warning: false
+#| message: false
+#| cache: true
+options(htmltools.dir.version = FALSE)
+library(ggplot2)
+
+base_axes <- function(a, b) {
+  # shorthand to set up Cartesian axes over a < x < b 
+  ggplot(data.frame(x=c(a, b)), aes(x=x)) +
+  # add axis lines to help guide plots
+  geom_vline(xintercept=0, colour="grey") +
+  geom_hline(yintercept=0, colour="grey")
+}
+```
+
+This week uses calculus to explore the properties different models. Once you've worked out an answer, you should check it against a scientific calculator, [algebra software](https://www.wolframalpha.com/), or [graphing software](https://www.geogebra.org/calculator/).
+
+## Derivatives
+
+<!-- TEACHER NOTE: This question intentionally uses all four of the most common notations for differentiating: f'(x), d/dx, x-dot, and (...)' -->
+
+Before we look at applications, here are some starter questions to practice differentiating.
+
+1. Find $f'(x)$ when $f(x) = x^2$, $f(x) = 3$, and $f(x) = x^3 + 3x^2 + 3x + 1$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+The first is done using the polynomial rule: if $f(x) = x^n$ then $f'(x) = nx^{n-1}$. The second is done by remembering the gradient of any constant is zero. Finally, the third uses both of those as well as the addition rule: if $f(x) = f_1(x) + f_2(x)$ then $f'(x) = f_1'(x) + f_2'(x)$. 
+:::
+::::
+
+2. Use two different methods to show $\frac{\text{d}}{\text{d}x}\big((x+a)(x-a)\big) = 2x$ for all $a\in\mathbb{R}$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+One method would be to use the difference of two squares: $(x+a)(x-a) = x^2 - a^2$. Then by the polynomial rule, the derivative is $2x$ since $a^2$ is a constant.
+
+Alternatively, by the product rule:
+\begin{align*}
+  \frac{\text{d}}{\text{d}x}\big((x+a)(x-a)\big) &= (x+a)\cdot\frac{\text{d}}{\text{d}x}(x-a) + (x-a)\cdot\frac{\text{d}}{\text{d}x}(x+a) \\
+  &= (x+a)\cdot1 + (x-a)\cdot1 \\
+  &= x + a + x - a \\
+  &= 2x.
+\end{align*}
+There others methods, albeit more complicated ones, besides these!
+:::
+::::
+
+3. Find $\dot{x}$ when $x = e^{2t}$, $x = \sin(2t)$, and $x = \tan(t)$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+By the rule for differentiating exponentials, the first gives $\dot{x} = 2e^{2t}$. However, this could also be done using the chain rule - which is what we'll use for the second. Remember $\sin(t)' = \cos(t)$ and $(2t)' = 2$, then by the chain rule $\dot{x} = 2\cos(2t)$.
+
+This is another standard derivative, but not one we covered in class! To find it, we'll use the quotient rule. We know $\tan(x) = \frac{\sin(x)}{\cos(x)}$, therefore,
+\begin{align*}
+  \dot{x} = \left(\frac{\sin t}{\cos t}\right)' &= \frac{(\sin t)'\cdot(\cos t) - (\sin t)\cdot(\cos t)'}{(\cos t)^2} \\
+    &= \frac{(\cos t)\cdot(\cos t) - (\sin t)\cdot(- \sin t)}{(\cos t)^2} \\
+    &= \frac{\cos^2 t + \sin^2 t}{\cos^2 t} \\
+    &= 1 + \tan^2 t.
+\end{align*}
+You may see online that $\tan(t)' = 1/\cos^2(t)$; why is this equivalent?
+:::
+::::
+
+## Model Interpretations
+
+In workshop two we looked at a range of different models for real-world phenomena. For each of these, use software to find the derivative of the model with respect to the independent variable. Then, examine it graphically and describe the meaning of the derivative in context.
+
+1. Compound interest, modelled by $P(t) = Q e^{rt}$, where $Q$ is the initial investment and $r$ is the rate of interest.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+We can do this using the rule for exponentials: $P'(t) = Qr e^{rt}$. This models how the interest accumulated changes over time.
+
+```{r}
+#| label: continuous-interest
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of P(t) and P'(t)."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+base_axes(0, 3) +
+  stat_function(fun=function(x){100*exp(1.25*x)}, colour="lightskyblue") +
+  stat_function(fun=function(x){100*1.25*exp(1.25*x)}, colour="darkorange")
+```
+Graphically, the gradient (shown in orange) is increasing; the interest accumulated will continue to increase!
+:::
+::::
+
+2. Population growth, modelled by $P(t) = \frac{P_0 \cdot K}{P_0 + (K - P_0)e^{-rt}}$, with initial population size $P_0$, a growth rate $r$ per day, and a maximum feasible population size $K$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+This ones a lot more fiddly. While it can be done using rules from this course (how?), using [Wolfram Alpha](https://www.wolframalpha.com/input?i=differentiate+P%28t%29+%3D+%28P_0+*+K%29%2F%28P_0+%2B+%28K+-+P_0%29*exp%28-r*t%29%29+with+respect+to+t),
+$$
+  P'(t) = \frac{KP_0r(K-P_0)e^{rt}}{{(K + P_0(e^{rt}-1))}^2}.
+$$
+
+This derivative models how the growth in population changes over time.
+
+```{r}
+#| label: growth-model
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of P(t) and P'(t)."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+P0 <- 10
+K <- 500
+rate <- 0.5
+
+growth_model <- function(x) {
+  (P0*K)/(P0 + (K-P0)*exp(-rate*x))
+}
+
+growth_growth <- function(x) {
+  (K*P0*rate*(K-P0)*exp(rate*x))/((K + P0*(exp(rate*x)-1))**2)
+}
+
+growth_plot <- base_axes(0, 15) +
+  stat_function(fun=growth_model, colour="lightskyblue") +
+  stat_function(fun=growth_growth, colour="darkorange")
+
+growth_plot
+```
+
+You might find the plot of this model (in blue) and its derivative (in orange) similar to graphs from the news during COVID. Population growth is related to disease modelling!
+:::
+::::
+
+3. Sound in decibels, modelled by $d(p) = 10\log\left(\frac{p}{p_{0}}\right)$, where $p_0$ is intensity of the faintest audible sound.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Through either log laws (how?) or [Wolfram Alpha](https://www.wolframalpha.com/input?i=d%28p%29+%3D+10log_10%28p%2Fp_0%29), we find $d'(p) = \frac{10}{\ln(10)}\cdot\frac{1}{p} \approx \frac{4.343}{p}$. Note that the solution doesn't depend at all on $p_0$ here!
+
+```{r}
+#| label: decibel-plot
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of d(p) and d'(p)."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+base_axes(0, 5) +
+  stat_function(fun=function(x){10*log(x, 10)}, n=1e5, colour="lightskyblue") +
+  stat_function(fun=function(x){10/(x*log(10))}, n=1e5, colour="darkorange") +
+  ylim(-25,100)
+```
+
+This derivative models how the increase in sound changes as the power changes.
+:::
+::::
+
+## Optimization
+
+We discussed how one of the key applications of differentiation is to find the maximum or minimum value a model can take. These points happen when the gradient is zero.
+
+1. What point is the minimum of $f(x) = \frac{x(x+1)}{2}$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+The gradient is given by $f'(x)$. That is,
+$$
+  f'(x) = \frac{\text{d}}{\text{d}x}\frac{x(x+1)}{2} = \frac{\text{d}}{\text{d}x} \left(\frac{x^2}{2} + \frac{x}{2}\right) = x + \frac{1}{2}. 
+$$
+The minimum happens when $f'(x) = 0$, the only solution to which is $x = -\frac{1}{2}$. Finally, to find the $y$-coordinate of the point,
+$$
+  f\left(-\frac{1}{2}\right) = \frac{-\frac{1}{2}\left(-\frac{1}{2}+1\right)}{2} = -\frac{1}{8}.
+$$
+So the minimum is at $(-\frac{1}{2}, -\frac{1}{8}) = (-0.5, -0.125)$.
+:::
+::::
+
+2. Does this minimum have meaning in the context of $S_n$ from the last workshop?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+No! Crucially, $S_n$ was defined as the sum of the first $n$ strictly positive integers:
+$$
+  S_n = \sum_{m=1}^{n} a_m = \frac{n^2 + n}{2}.
+$$
+This means the domain of $S_n$ as a function is $\mathbb{Z}^>$. While $f(x)$ and $S_n$ have the same algebraic formula (just different variables), the minimum of $f(x)$ happens at $x = -0.5$: neither positive nor an integer. Therefore it cannot be a minimum of $S_n$.
+:::
+::::
+
+3. Could this be used to make a better argument that $\sum_{n=1}^{\infty} n \neq -\frac{1}{12}$?
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Despite the above, yes! The gradient of $S_n$ interpreted as a function  $S_n:\mathbb{Z}^>\rightarrow\mathbb{Z}^>$ is
+$$
+  S_n' = n + \frac{1}{2}.
+$$
+This gradient is always positive for $n\in\mathbb{Z}^>$, which means $S_n$ increases as $n$ increases. But if that's true, and $S_1 = 1$, we can never get $S_n = -\frac{1}{12}$ since it would require a decrease!
+:::
+::::
+
+## Classifying Derivatives
+
+It's not always so clear whether a critical point is a maximum, minimum, or an inflection. To check this we look at the second derivative: $\frac{\text{d}^2}{\text{d}x^2}$, $f''(x)$, or $\ddot{x}$.
+
+At a point $x$ where $f'(x) = 0$:
+
+- If $f''(x) > 0$, then $x$ is a local minimum,
+- If $f''(x) < 0$, then $x$ is a local maximum,
+- If $f''(x) = 0$, more information is needed.
+
+This is sometimes called the **derivative test**.
+
+1. Verify that $(-0.5, -0.125)$ is a minimum of $f(x) = \frac{x(x+1)}{2}$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Since $f'(x) = x + \frac{1}{2}$, we have $f''(x) = 1$. This second derivative is positive at $x = -0.5$ (more over, it's positive for any value of $x$), so the point must be a minimum.
+:::
+::::
+
+2. Classify the critical points of $f(x) = x^3 + 3x^2 - 6x - 8$.
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+Using the polynomial rule, $f'(x) = 3x^2 + 6x - 6$. Using the quadratic equation or otherwise, this is zero when $x = -1 \pm \sqrt{3}$. To classify these, we use the second derivative $f''(x) = 6x + 6$:
+
+- $f''(-1+\sqrt{3}) = -6 + 6\sqrt{3} + 6$ is positive, therefore it's a minimum;
+- $f''(-1-\sqrt{3}) = -6 - 6\sqrt{3} + 6$ is negative, therefore it's a maximum.
+
+```{r}
+#| label: cubic-plot
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of the cubic described."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+base_axes(-6, 4) +
+  stat_function(fun=function(x){x**3 + 3*x**2 - 6*x - 8}, colour="lightskyblue")
+```
+This agrees with what we see in the plot of the cubic.
+:::
+::::
+
+3. Find the time at which the population $P(t)$ is changing fastest.
+
+:::{.callout-note title=Hint}
+If $f(x) = \frac{f_1(x)}{f_2(x)}$, when is $f(x) = 0$?
+:::
+
+::::{.content-hidden unless-meta=answers}
+:::{.callout-tip title=Solution}
+This question looks intimidating, but it can be turned into a simpler problem. 
+
+Finding when $P(t)$ is changing fastest means finding the maximum of $P'(t)$. Remember, we used Wolfram Alpha to find
+$$
+  P'(t) = \frac{KP_0r(K-P_0)e^{rt}}{{(K + P_0(e^{rt}-1))}^2},
+$$
+so [similarly](https://www.wolframalpha.com/input?i=second+derivative+of+P%28t%29+%3D+%28P_0+*+K%29%2F%28P_0+%2B+%28K+-+P_0%29*exp%28-r*t%29%29+with+respect+to+t) we can find
+$$
+  P''(t) = \frac{K P_0 r^2 (K - P_0) e^{r t} (K + P_0 (-e^{r t} - 1))}{(K + P_0 (e^{r t} - 1))^3}
+$$
+which we now need to solve for $t$. This looks like hell, but remember $P''(t) = 0$ only when the numerator is zero. Even better, the messy $K P_0 r^2 (K - P_0)$ in the numerator is just a constant! That leaves us solving $$e^{r t} (K + P_0 (-e^{r t} - 1)) = 0.$$
+
+Since $e^{rt} > 0$ for all $t$, this is zero only when $K + P_0 (-e^{r t} - 1) = 0$. A bit of rearranging later gives
+$$
+  t = \frac{1}{r}\ln\!\left(\frac{K}{P_0} - 1\right).
+$$
+```{r}
+#| label: growth-plot-maximum
+#| echo: false
+#| out-width: 60%
+#| fig-align: 'center'
+#| fig-format: svg
+#| fig-alt: "Plot of P(t) and P'(t), with maximum highlighted."
+#| fig-width: 4
+#| fig-height: 2
+#| cache: true
+
+growth_plot + geom_vline(xintercept=log(K/P0 - 1)/rate, colour="lightpink")
+```
+This checks out with what we observed on the graph too. Before the pink line, the population growth is getting faster. After the pink line, the population is still increasing but the growth has started to slow down.
+:::
+::::
