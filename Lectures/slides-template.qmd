@@ -17,14 +17,6 @@ library(kableExtra)  # table formatting
 library(ggpubr)      # annotations like stat_regline_equation
 ```
 
-```{css}
-/*| echo: false */
-figcaption {
-  margin: auto;
-  text-align: center;
-}
-```
-
 1.  List item A,
 2.  List item B,
 3.  List item C,
