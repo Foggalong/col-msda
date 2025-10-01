@@ -82,7 +82,7 @@ Speaker notes go here.
 ## Class & Assessment
 
 ::: {image}
-![Placeholder timetable image to be replaced once confirmed.](img/Stundenplan.PNG){width=60%}
+![Full timetable for MSDA.](img/Stundenplan.PNG){width=100% alt="Lecture in Paterson's LG34 from 16:10-17:00 on Tuesdays and the three tutorial groups in St Leonard's 2.14 (9:00-10:50 for group A, 14:10-16:00 for group B, and 16:10-18:00 for group C) on Wednesdays."}
 :::
 
 The assessment is 40% an in-class test on maths skills and 60% on a data analysis project.
@@ -119,8 +119,7 @@ base_axes + stat_function(fun=equation)
 
 A linear equation $mx + c = 0$ only has one **solution**: $x = -\frac{c}{m}$.
 
-::: {.callout-note}
-### Example
+::: {.callout-note title=Example}
 The equation $2x + 3 = 0$ has the solution $x = -\frac{3}{2} = -1.5$.
 :::
 
@@ -149,8 +148,7 @@ base_axes + stat_function(fun=equation)
 
 A quadratic $ax^2 + bx = 0$ has no, one, or two solutions, given by $x = -\frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
 
-::: {.callout-note}
-### Example
+::: {.callout-note title=Example}
 The quadratic $y = 2x^2 + x - 10$ has solutions $x = \frac{-1 \pm 9}{4}$. That is, the solution is $x = \frac{8}{4} = 2$ or $x = -\frac{10}{4} = -2.5$.
 :::
 
@@ -179,8 +177,7 @@ base_axes + stat_function(fun=equation) + ylim(0,12)
 
 Care is needed with negative exponents because we want to avoid **dividing by zero**.
 
-::: {.callout-note}
-### Example
+::: {.callout-note title=Example}
 The curve $y = 3x^{-2} = \frac{3}{x^2}$ has a **singularity** at $x = 0$, since it is undefined for that value.
 :::
 
@@ -227,8 +224,7 @@ You might remember the idea of a "function machine" from school.
 ![Example depiction of a function machine _(Bill Bailey, 2009)_.](img/Function_machine.png){width=20%}
 :::
 
-::: {.callout-note}
-### Example
+::: {.callout-note title=Example}
 If we define our function machine as $x+1$, then for any input $x$ we put into the machine we will get one more as the output. For example, we might have 'INPUT 3 $\rightarrow \boxed{x+1} \rightarrow$ OUTPUT 4'.
 :::
 
@@ -242,8 +238,7 @@ Speaker notes go here.
 
 We can take the previous example
 
-::: {.callout-note}
-### Example
+::: {.callout-note title=Example}
 If we define our function machine as $x+1$, then for any input $x$ we put into the machine we will get one more as the output. For example, we might have 'INPUT 3 $\rightarrow \boxed{x+1} \rightarrow$ OUTPUT 4'.
 :::
 
@@ -347,8 +342,7 @@ When functions model real world process, it's useful to know how to reverse them
 
 Mathematically, we want to find the function $f^{-1}$ such that $x = f^{-1}(y)$.
 
-::: {.callout-note}
-### Example
+::: {.callout-note title=Example}
 For simple cases we can do this by eye: $f(x) = x+1$ is "reversed" by the function that subtracts one: $f^{-1}(x) = x - 1$.
 :::
 
@@ -400,8 +394,7 @@ base_axes +
 This works because the <b style="color:#FF8C00;">inverse</b> is the 'mirror' of the original <b style="color:#87CEFA;">function</b> in the line $y = x$.
 
 
-::: {.callout-note}
-### Example
+::: {.callout-note title=Example}
 To find the inverse of $f(x) = 5x - 7$, we first write $y = 5x - 7$. After swapping $x$ and $y$ we have $x = 5x - 7$. Rearranging to make $y$ the subject gives $y = \frac{1}{5}x + \frac{7}{5}$, and so $f^{-1}(x) = \frac{1}{5}x + \frac{7}{5}$.
 :::
 
@@ -413,8 +406,7 @@ Speaker notes go here.
 
 We can also combine functions. In the language of function machines, this means taking the output of one function and immediately using it as input for another function. 
 
-::: {.callout-note}
-### Example
+::: {.callout-note title=Example}
 Consider the functions $f(x) = x+1$ and $g(x) = 2x$. The **composition** $f\circ{}g$ is defined as
 \begin{equation}
   f(g(x)) = f(2x) = 2x + 1.
@@ -424,8 +416,7 @@ _i.e._ we took the output of $\boxed{2x}$ and used it as the input of $\boxed{x+
 
 This introduces '$\circ$' as notation for function compositions. Note that $f\circ{}g \neq g\circ{}f$.
 
-::: {.callout-warning}
-### Example
+::: {.callout-warning title=Example}
 The **composition** $g\circ{}f$ is defined as
 \begin{equation}
   g(f(x)) = g(x+1) = 2(x + 1) = 2x + 2.
@@ -440,8 +431,7 @@ Speaker notes go here.
 
 Just as compositions combine functions, **decompositions** can break them apart.
 
-::: {.callout-note}
-### Example
+::: {.callout-note title=Example}
 Consider $(5x+8)^2$. Here the expression '$5x+8$' is nested within another function. We can think of it as the 'inside' function. The outside function is $x^2$.
 
 ![Visual explanation of function composition and decomposition.](img/decompose.png){width=40%}
