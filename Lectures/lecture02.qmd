@@ -3,6 +3,8 @@ title: "Exponentials & Logs"
 subtitle: "Lecture 2 - FNDN07012"
 ---
 
+# Powers Recap {.center background-color="#041E42" style="color: #d6d6d6; text-align: center;"}
+
 ## Index Laws 
 
 Recall for $x\in\mathbb{R}$ and $n,m\in\mathbb{Z}$ we define

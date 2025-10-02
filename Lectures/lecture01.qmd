@@ -3,6 +3,8 @@ title: "Algebra & Functions"
 subtitle: "Lecture 1 - FNDN07012"
 ---
 
+# Logistics {.center background-color="#041E42" style="color: #d6d6d6; text-align: center;"}
+
 ## Introduction
 
 Welcome to FNDN07012,
